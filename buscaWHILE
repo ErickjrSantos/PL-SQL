@@ -1,0 +1,24 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `new_procedure`()
+BEGIN
+
+Declare command varchar(255);
+
+set @user = 13 ;
+set @n=1;
+
+while @n<=3 do
+set @nom = concat('atv_grp_',@n);
+set @s =concat("SELECT * FROM atividade.",@nom);
+set @sx = concat(" where id_usuario =",@user);
+set @sa = concat (@s,@sx);
+prepare command from @sa;
+if command <> '' or null then 
+execute command;
+DEALLOCATE PREPARE command;
+end if;
+execute command;
+DEALLOCATE PREPARE command;
+set @n = @n+1;
+end while;
+
+END
